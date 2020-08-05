@@ -43,7 +43,7 @@
                             </div>
                             <div>
                                 <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <p id = "try" class="action-left" onclick="countClick()"> <span id="count">3</span>  try left</p>
                             </div>
                     </div>
                 </div>
@@ -79,25 +79,50 @@
         }
 
         // Submit button Event Handler 
+        let count = 3;
         var submitButton = document.getElementById("submitBtn");
-        submitButton.addEventListener("click", function(){
+        submitButton.addEventListener("click",function(){
            // define variable from two id
             let generatedPinNumber = document.getElementById("generate-random-number").value;
             let inputNumber = document.getElementById("showNumber").value;
 
+            // check is there any input number or not
+            if(inputNumber){
+             // if count 0 then submit button will be disabled   
+            if(count ==0)
+            {
+                document.getElementById("submitBtn").disabled = true; 
+                alert("No attempt left"); 
+            }
+
             
-            document.getElementById("notify-section").style.display = "block"; 
-           
-            if (generatedPinNumber==inputNumber){
+            else{
+                document.getElementById("notify-section").style.display = "block"; 
+                // if pin matched
+                if (generatedPinNumber==inputNumber){
                 document.getElementById("pin-match").style.display = "block";
                 document.getElementById("pin-not-match").style.display = "none";  
                 
-            }
+                }
+                //if pin not matched
             else {
                 document.getElementById("pin-not-match").style.display = "block"; 
                 document.getElementById("pin-match").style.display = "none";
                 alert("Wrong Pin");
             }
+           
+            count = parseInt(count)-parseInt(1);
+            let clickData = document.getElementById("count");
+            clickData.innerText= count;
+
+            }    
+            
+        }
+
+        else{
+
+            alert("Please Provide Input Number");
+        }
             
         })
 
@@ -113,19 +138,13 @@
             deleteInput.addEventListener("click", function(){
             var inputValue = document.getElementById("showNumber").value ;
             var finalValue = inputValue.slice(0,-1); 
-            document.getElementById("showNumber").value = finalValue;
+            document.getElementById("showNumber").value = finalValue; 
               
         })
-       
-
-
-
-      
-            
+        
            
     </script>
 
     
-
 </body>
 </html>
